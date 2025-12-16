@@ -1,0 +1,328 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-blue: #87ceeb;
+  --light-blue: #b0e0e6;
+  --sky-blue: #e0f6ff;
+  --wave-1: #4fc3f7;
+  --wave-2: #81d4fa;
+  --wave-3: #b0e0e6;
+  --night-dark: #0d1b4d;
+  --night-mid: #1a3a6b;
+  --night-light: #0d3d66;
+  --button-blue: #2d5fbf;
+  --button-dark: #1a3a8e;
+  --button-border: #60a9fa;
+  --button-night-1: #ffd93d;
+  --button-night-2: #ffc700;
+  --button-night-text: #2d5016;
+  --transition-fast: 0.2s ease;
+  --transition-smooth: 8s ease-in-out;
+  --transition-wave: 12s;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #f7f7f7;
+  position: relative;
+  z-index: 0;
+}
+
+/* SKY BACKGROUND */
+.sky-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(
+    135deg,
+    var(--primary-blue) 0%,
+    var(--light-blue) 25%,
+    var(--sky-blue) 50%,
+    var(--light-blue) 75%,
+    var(--primary-blue) 100%
+  );
+  z-index: 1;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Animated Sky Gradient */
+.sky-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+      circle at 20% 50%,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(255, 255, 255, 0.1) 0%,
+      transparent 50%
+    );
+  animation: sky-shimmer var(--transition-smooth) infinite;
+  pointer-events: none;
+}
+
+@keyframes sky-shimmer {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* CLOUDS */
+.cloud {
+  position: absolute;
+  background: white;
+  z-index: 3;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.12));
+  animation-name: float-cloud;
+  animation-duration: var(--transition-wave);
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.cloud::before,
+.cloud::after {
+  content: "";
+  position: absolute;
+  background: white;
+  border-radius: 100px;
+}
+
+.cloud1 {
+  width: clamp(120px, 12vw, 150px);
+  height: clamp(50px, 5vw, 60px);
+  top: 10%;
+  left: -150px;
+  border-radius: 60px 40px 40px 60px / 40px 50px 50px 40px;
+  animation-delay: 0s;
+}
+
+.cloud1::before {
+  width: clamp(60px, 6vw, 70px);
+  height: clamp(60px, 6vw, 70px);
+  top: -35px;
+  left: 20px;
+  border-radius: 50%;
+}
+
+.cloud1::after {
+  width: clamp(50px, 5vw, 60px);
+  height: clamp(50px, 5vw, 60px);
+  top: -30px;
+  right: 30px;
+  border-radius: 50%;
+}
+
+.cloud2 {
+  width: clamp(150px, 15vw, 180px);
+  height: clamp(60px, 6vw, 70px);
+  top: 22%;
+  left: -180px;
+  border-radius: 70px 50px 50px 70px / 50px 60px 60px 50px;
+  animation-delay: 3s;
+}
+
+.cloud2::before {
+  width: clamp(70px, 7vw, 80px);
+  height: clamp(70px, 7vw, 80px);
+  top: -40px;
+  left: 30px;
+  border-radius: 50%;
+}
+
+.cloud2::after {
+  width: clamp(60px, 6vw, 70px);
+  height: clamp(60px, 6vw, 70px);
+  top: -35px;
+  right: 40px;
+  border-radius: 50%;
+}
+
+.cloud3 {
+  width: clamp(110px, 11vw, 140px);
+  height: clamp(45px, 5vw, 55px);
+  top: 34%;
+  left: -140px;
+  border-radius: 55px 35px 35px 55px / 35px 45px 45px 35px;
+  animation-delay: 7s;
+}
+
+.cloud3::before {
+  width: clamp(55px, 5.5vw, 65px);
+  height: clamp(55px, 5.5vw, 65px);
+  top: -32px;
+  left: 15px;
+  border-radius: 50%;
+}
+
+.cloud3::after {
+  width: clamp(50px, 5vw, 60px);
+  height: clamp(50px, 5vw, 60px);
+  top: -30px;
+  right: 20px;
+  border-radius: 50%;
+}
+
+@keyframes float-cloud {
+  0% {
+    transform: translateX(-150px);
+  }
+  100% {
+    transform: translateX(150vw) translateY(-5px);
+  }
+}
+
+/* STARS */
+#stars {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.star {
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+}
+
+@keyframes star-pulse {
+  0%,
+  100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* MAIN */
+.main-container {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* BOTTOM WAVES */
+.waves {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 200%;
+  height: clamp(100px, 15vh, 150px);
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,40 Q300,20 600,40 Q900,60 1200,40 L1200,120 L0,120 Z" fill="%234FC3F7" opacity="0.8"/><path d="M0,60 Q300,30 600,60 Q900,90 1200,60 L1200,120 L0,120 Z" fill="%2381D4FA" opacity="0.6"/><path d="M0,80 Q300,50 600,80 Q900,100 1200,80 L1200,120 L0,120 Z" fill="%23B0E0E6" opacity="0.4"/></svg>')
+    repeat-x;
+  background-size: 1200px 120px;
+  background-position: 0 0;
+  z-index: 5;
+  pointer-events: none;
+  animation: wave-shift var(--transition-wave) infinite;
+}
+
+@keyframes wave-shift {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 1200px 0;
+  }
+}
+
+/* TOGGLE MODE */
+.mode-toggle {
+  position: fixed;
+  bottom: clamp(12px, 2vh, 20px);
+  right: clamp(12px, 2vw, 20px);
+  width: clamp(45px, 5vw, 50px);
+  height: clamp(45px, 5vw, 50px);
+  border: 3px dashed var(--button-border);
+  border-radius: 16px 20px 18px 16px / 20px 16px 16px 18px;
+  background: linear-gradient(
+    135deg,
+    var(--button-blue) 0%,
+    var(--button-dark) 100%
+  );
+  color: var(--button-border);
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  cursor: pointer;
+  z-index: 6;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  padding: 0;
+  pointer-events: auto;
+}
+
+.mode-toggle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.mode-toggle:active {
+  transform: scale(0.95);
+}
+
+/* NIGHT MODE */
+body.night {
+  background: linear-gradient(
+    135deg,
+    var(--button-blue) 0%,
+    var(--button-dark) 100%
+  );
+}
+
+body.night .sky-bg {
+  background: linear-gradient(
+    135deg,
+    var(--night-dark) 0%,
+    var(--night-mid) 25%,
+    var(--night-mid) 50%,
+    var(--night-light) 75%,
+    var(--night-dark) 100%
+  );
+}
+
+body.night .mode-toggle {
+  background: linear-gradient(
+    135deg,
+    var(--button-night-1) 0%,
+    var(--button-night-2) 100%
+  );
+  border-color: var(--button-night-text);
+  color: var(--button-night-text);
+}
